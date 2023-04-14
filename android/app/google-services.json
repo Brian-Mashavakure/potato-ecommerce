@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "976488368480",
+    "project_id": "potato-e-commerce",
+    "storage_bucket": "potato-e-commerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976488368480:android:6346e12c1e128a9acbf605",
+        "android_client_info": {
+          "package_name": "com.example.potato_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976488368480-14fepmhg8fd9cq59i6rr23nq7dh9larj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.potato_ecommerce",
+            "certificate_hash": "602bfbd92028acb80910bdd60fc805cd128e7ea2"
+          }
+        },
+        {
+          "client_id": "976488368480-v1moihs58e6id1nla55qbkl8ct5bcime.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYv0wbNpj0pd-ZOwrGhp7_OIHhxt3zp3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976488368480-v1moihs58e6id1nla55qbkl8ct5bcime.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
