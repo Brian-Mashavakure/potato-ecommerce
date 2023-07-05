@@ -22,7 +22,7 @@ class _WelcomePageState extends State<WelcomePage>{
               'icons/welcomepage.jpg',
             ),
             fit: BoxFit.fitHeight,
-            opacity: 4.5,
+            opacity: 6.5,
           )
         ),
         child: SafeArea(

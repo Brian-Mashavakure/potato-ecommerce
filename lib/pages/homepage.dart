@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'buyerview/buyerhome.dart';
+import 'sellerview/sellerhome.dart';
+
 
 
 class HomePage extends StatefulWidget{
@@ -12,34 +17,29 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
-  //firebase data
-  final firestoreData = FirebaseFirestore.instance.collection('userRoles').doc('User Role');
-
-  //user
-
+  //firebase user
+  final user = FirebaseAuth.instance!.currentUser;
+ // Scaffold(
+      // appBar:
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                firestoreData!.toString(),
-              ),
-            ),
+        child: user!.displayName.toString() == 'Buyer'?
 
-            SizedBox(height: 20,),
+        UserHome() :
 
-            ElevatedButton(
-              child: Text('Log Out'),
-              onPressed: () => FirebaseAuth.instance.signOut(),
-            )
-          ],
-        ),
+            (user!.displayName.toString() == 'Seller')?
+
+            SellerHome() :
+
+                Center(
+                  child: CircularProgressIndicator(),
+                )
 
       ),
+
     );
   }
 }

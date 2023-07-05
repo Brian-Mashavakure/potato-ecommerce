@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'signup.dart';
+import 'otp.dart';
 import 'authutils.dart';
+import 'forgotpasword.dart';
 
 class Login extends StatefulWidget{
   const Login({Key ? key}): super(key : key);
@@ -43,13 +46,33 @@ class _LoginState extends State<Login>{
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.deepPurpleAccent,
           textColor: Colors.white,
           fontSize: 16.0
       );
 
       //AuthUtils.showSnackBar(e.message);
     }
+  }
+
+
+  //google sign in
+  GoogleSignIn() async{
+    //begin signin process
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+    //get user auth details
+    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+
+    //create new user credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
+
+    //sign in
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+
   }
 
   //disposing controllers to help with memory management
@@ -74,7 +97,12 @@ class _LoginState extends State<Login>{
               child: Column(
                 children: <Widget>[
 
-                  SizedBox(height: 150,),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 200,
+                    width: 200,
+                    child: Image.asset('icons/logo.jpg'),
+                  ),
 
 
                   Center(
@@ -96,7 +124,7 @@ class _LoginState extends State<Login>{
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            contentPadding: EdgeInsets.all(15.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               borderSide: BorderSide(width: 0.8, color: Colors.black54),
@@ -119,7 +147,7 @@ class _LoginState extends State<Login>{
                         keyboardType: TextInputType.visiblePassword,
                         controller: passwordController,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            contentPadding: EdgeInsets.all(15.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               borderSide: BorderSide(width: 0.8, color: Colors.black54,),
@@ -136,6 +164,22 @@ class _LoginState extends State<Login>{
                         ),
                       ),
                     ),
+                  ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPassword())),
+                        child: Text(
+                            'forgot password?',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Color(0xFF240C14),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
 
                   SizedBox(height: 20,),
@@ -159,72 +203,55 @@ class _LoginState extends State<Login>{
 
                   SizedBox(height: 30,),
 
-
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: GestureDetector(
-                            onTap: (){},
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.google,
-                                    color: Colors.black54,
-                                  ),
-
-                                  SizedBox(width: 5,),
-
-                                  Text('Continue With Google', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),),
-
-                                ],
-                              ),
-                            ),
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton.icon(
+                        label: Text('Gmail', style: TextStyle(color: Colors.black54,),),
+                        icon: FaIcon(
+                          FontAwesomeIcons.google,
+                          color: Colors.black54,
                         ),
-
-                        SizedBox(height: 15,),
-
-                        Center(
-                          child: GestureDetector(
-                            onTap: (){},
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.facebook,
-                                    color: Colors.black54,
-                                  ),
-
-                                  SizedBox(width: 5,),
-
-                                  Text('Continue With Facebook', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),),
-
-                                ],
-                              ),
-                            ),
+                        onPressed: () => GoogleSignIn(),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          minimumSize: Size(90,50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
+
                         ),
-                      ],
-                    ),
+                      ),
+
+
+
+                      ElevatedButton.icon(
+                        label: Text('Phone', style: TextStyle(color: Colors.black54,),),
+                        icon: FaIcon(
+                          FontAwesomeIcons.phone,
+                          color: Colors.black54,
+                        ),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => OTP())),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          minimumSize: Size(90,50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+
+                        ),
+                      ),
+                    ],
                   ),
 
 
-
-
-                ],
-              ),
-            ),
+           ]
           ),
         ),
-      ),
+    ),
+
+    )
+    )
     );
   }
 }

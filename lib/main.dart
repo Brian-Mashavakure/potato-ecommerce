@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 import 'pages/homepage.dart';
 import 'pages/welcomepage.dart';
 import 'pages/authentication/authutils.dart';
+import 'pages/widgets/buyernav.dart';
+import 'pages/widgets/sellernav.dart';
+import 'services/mongoconnection.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await MongoConnection.connect();
 
 
 
@@ -55,6 +60,9 @@ class MyApp extends StatelessWidget {
   //instantiating auth utils class
   final authUtilsObj = new AuthUtils();
 
+  //firebase user
+  final _user = FirebaseAuth.instance.currentUser!;
+
 
   // This widget is the root of the application.
   @override
@@ -67,16 +75,33 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
         textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black54)),
       ),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-            return HomePage();
-          }else{
-            return WelcomePage();
-          }
-        },
-      )
+      home: AnimatedSplashScreen(
+        splash: Scaffold(
+          body: Center(
+            child:  Container(
+              alignment: Alignment.center,
+              height: 200,
+              width: 200,
+              child: Image.asset('icons/logo.jpg'),
+            ),
+          ),
+        ),
+        duration: 2000,
+        nextScreen:  StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot){
+            if(snapshot.hasData){
+              return _user!.displayName.toString() == 'Buyer'? BuyerNav() : _user!.displayName.toString() == 'Seller' ? SellerNav() : CircularProgressIndicator();
+            }else{
+              return WelcomePage();
+            }
+          },
+        ),
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: Colors.white,
+      ),
+
+
     );
   }
 }

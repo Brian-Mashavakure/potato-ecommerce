@@ -3,9 +3,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'login.dart';
+import 'otp.dart';
 import 'authutils.dart';
+import '../homepage.dart';
 
 class Signup extends StatefulWidget{
   const Signup({Key ? key}): super(key : key);
@@ -17,6 +20,12 @@ class Signup extends StatefulWidget{
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class _SignupState extends State<Signup>{
+  //constructor for using with the dropdown
+  _SignupState(){
+    userRole = _rolesList[0];
+  }
+
+
   //controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -26,9 +35,7 @@ class _SignupState extends State<Signup>{
   //user roles
   String? userRole;
 
-  List Roles = [
-    'Seller', 'Buyer'
-  ];
+  final _rolesList = ['Seller', 'Buyer'];
 
   //password boolean
   bool isVisible = false;
@@ -44,52 +51,49 @@ class _SignupState extends State<Signup>{
   }
 
   //signup user
-  Future SignUp() async{
-    //progress indicator while waiting for login
-    // showDialog(
-    //     context: context,
-    //     barrierDismissible: false,
-    //     builder: (context) =>
-    //         Center(
-    //           child: CircularProgressIndicator(),
-    //         )
-    // );
-    try {
-
-      if(confirmPassword()) {
+  //using firebase display name property for user role
+  Future<void> SignUp(String role, String email, String password) async{
+    try{
+      if(confirmPassword()){
         //create user
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
+            email: email, password: password);
+        await FirebaseAuth.instance.currentUser!.updateDisplayName(role);
 
-        //add user role
-        AddUserRole('Buyer');
+        //creating user document in firebase
+        await FirebaseFirestore.instance.collection('users').doc(role).set({
+          'email': email,
+          'uid': role,
+          'password': password,
+        });
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+
+
       }
-
-    } on FirebaseAuthException catch (e) {
-
-      //AuthUtils.showSnackBar(e.message);
+    }on FirebaseAuthException catch (e){
       Fluttertoast.showToast(
           msg: e.message.toString(),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.deepPurpleAccent,
           textColor: Colors.white,
           fontSize: 16.0
       );
-      
+
+
     }
-    //hide progress indicator after login
-    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  Future AddUserRole(String role) async{
+
+  Future AddUserRole() async{
     await FirebaseFirestore.instance.collection('userRoles').add({
-      'User Role': role,
+      'User Role': userRole,
     });
   }
+
+
 
 
   //disposing controllers for memory management
@@ -113,7 +117,16 @@ class _SignupState extends State<Signup>{
               child: Column(
                 children: <Widget>[
 
-                  SizedBox(height: 150,),
+
+
+                  Container(
+                    alignment: Alignment.center,
+                    height: 200,
+                    width: 200,
+                    child: Image.asset('icons/logo.jpg'),
+                  ),
+
+
 
 
                   Center(
@@ -126,7 +139,7 @@ class _SignupState extends State<Signup>{
                     ),
                   ),
 
-                  SizedBox(height: 35,),
+                  SizedBox(height: 30,),
 
                   Center(
                     child: Padding(
@@ -135,7 +148,7 @@ class _SignupState extends State<Signup>{
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            contentPadding: EdgeInsets.all( 15.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               borderSide: BorderSide(width: 0.8, color: Colors.black54),
@@ -149,43 +162,41 @@ class _SignupState extends State<Signup>{
                     ),
                   ),
 
-                  SizedBox(height: 20,),
-
+                  SizedBox(height: 18,),
 
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          border: Border.all(width: 0.8, color: Colors.black54),
-                        ),
-                        child: DropdownButton(
-                          hint: Text('Select User Role'),
-                          dropdownColor: Colors.white30,
-                          icon: Icon(Icons.arrow_drop_down),
-                          iconSize: 25,
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: userRole,
-                          onChanged: (newValue){
-                            setState(() {
-                              newValue = userRole;
-                            });
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButtonFormField(
+
+                        value: userRole,
+                        items: _rolesList.map(
+                              (e){
+                                return DropdownMenuItem(child: Text(e), value: e);
+                              }
+                          ).toList(),
+                          onChanged: (val){
+                          setState(() {
+                            userRole = val as String;
+                          });
                           },
-                          items: Roles.map((valueItem){
-                            return DropdownMenuItem(
-                              value: valueItem,
-                              child: Text(valueItem),
-                            );
-                          }).toList(),
+                        icon: Icon(Icons.arrow_drop_down_circle_rounded),
+                        dropdownColor:  Colors.white30,
+                        decoration: InputDecoration(
+                          labelText: "User Role",
+                          contentPadding: EdgeInsets.all(15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide(width: 0.8, color: Colors.black54),
+                          ),
+                          prefixIcon: Icon(Icons.person_2_rounded)
                         ),
-                      )
+                      ),
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+
+                 SizedBox(height: 18,),
 
                   Center(
                     child: Padding(
@@ -194,7 +205,7 @@ class _SignupState extends State<Signup>{
                         keyboardType: TextInputType.visiblePassword,
                         controller: passwordController,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            contentPadding: EdgeInsets.all(15.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               borderSide: BorderSide(width: 0.8, color: Colors.black54),
@@ -213,7 +224,7 @@ class _SignupState extends State<Signup>{
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 18,),
 
                   Center(
                     child: Padding(
@@ -222,7 +233,7 @@ class _SignupState extends State<Signup>{
                         keyboardType: TextInputType.visiblePassword,
                         controller: confirmController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                          contentPadding: EdgeInsets.all( 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30.0),
                             borderSide: BorderSide(width: 0.8, color: Colors.black54),
@@ -242,10 +253,14 @@ class _SignupState extends State<Signup>{
                   ),
 
 
-                  SizedBox(height: 35,),
+                  SizedBox(height: 33,),
 
                   ElevatedButton(
-                    onPressed: () => SignUp(),
+                    onPressed: () => SignUp(
+                      userRole!,
+                      emailController.text,
+                      passwordController.text
+                    ),
                     child: Text('Create Account'),
                     style: ElevatedButton.styleFrom(
                       textStyle: TextStyle(
@@ -266,63 +281,9 @@ class _SignupState extends State<Signup>{
                     ),
                   ),
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 20,),
 
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: GestureDetector(
-                            onTap: (){},
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.google,
-                                    color: Colors.black54,
-                                  ),
 
-                                  SizedBox(width: 5,),
-
-                                  Text('Continue With Google', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),),
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: 10,),
-
-                        Center(
-                          child: GestureDetector(
-                            onTap: (){},
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.facebook,
-                                    color: Colors.black54,
-                                  ),
-
-                                  SizedBox(width: 5,),
-
-                                  Text('Continue With Facebook', style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black54),),
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
 
 
 
