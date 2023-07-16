@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'buyerview/buyerhome.dart';
+import 'buyerview/home/buyerhome.dart';
 import 'sellerview/sellerhome.dart';
-
+import 'widgets/buyernav.dart';
+import 'widgets/sellernav.dart';
 
 
 class HomePage extends StatefulWidget{
@@ -28,11 +29,11 @@ class _HomePageState extends State<HomePage>{
       body: SafeArea(
         child: user!.displayName.toString() == 'Buyer'?
 
-        UserHome() :
+        BuyerNav() :
 
             (user!.displayName.toString() == 'Seller')?
 
-            SellerHome() :
+            SellerNav() :
 
                 Center(
                   child: CircularProgressIndicator(),

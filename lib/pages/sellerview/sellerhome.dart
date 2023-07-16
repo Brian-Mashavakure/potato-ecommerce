@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 import '../widgets/sellernav.dart';
+import '../widgets/sellerdrawer.dart';
 
 
 class SellerHome extends StatefulWidget{
@@ -38,12 +39,12 @@ class _SellerHomeState extends State<SellerHome>{
         ),
         actions: [
           IconButton(
-            icon: FaIcon(FontAwesomeIcons.person),
+            icon: Icon(Icons.person),
             onPressed: (){},
           )
         ],
-
       ),
+      drawer: SellerDrawer(),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

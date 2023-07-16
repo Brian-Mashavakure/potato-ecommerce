@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 import '../widgets/buyernav.dart';
+import '../widgets/buyerdrawer.dart';
 
 
 class BuyerProfile extends StatefulWidget{
@@ -40,6 +41,7 @@ class _BuyerProfileState extends State<BuyerProfile>{
         ],
 
       ),
+      drawer: BuyerDrawer(),
       body: SafeArea(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -34,7 +34,7 @@ class SettingsTile extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            fontSize: 13,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         ),

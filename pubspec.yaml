@@ -63,6 +63,22 @@ dependencies:
   #icons
   ionicons: ^0.2.2
 
+  url_launcher: ^6.1.6
+  #whatsapp link dependency
+  whatsapp_unilink: ^2.0.2
+
+  #telegram dependency
+  telegram: ^0.0.3
+
+  #sms dependency
+  flutter_sms: ^2.3.3
+
+  #drawer dependency
+  hidden_drawer_menu: ^3.0.1
+
+  #local auth dependency for biometrics
+  local_auth: ^2.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

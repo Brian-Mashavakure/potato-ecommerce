@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/buyernav.dart';
 import 'components/itemcard.dart';
+import '../../widgets/buyerdrawer.dart';
 
 
 class Cart extends StatefulWidget{
@@ -34,12 +35,15 @@ class _CartState extends State<Cart>{
         ),
         actions: [
           IconButton(
-            icon: FaIcon(FontAwesomeIcons.shoppingCart),
-            onPressed: (){},
+            icon: Icon(Icons.shopping_cart),
+            onPressed: (){
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Cart()));
+            },
           )
         ],
 
       ),
+      drawer: BuyerDrawer(),
       body: SafeArea(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,30 +53,26 @@ class _CartState extends State<Cart>{
               ListView(
                 physics: ClampingScrollPhysics(),
                 children: <Widget>[
-                  ItemCard(pictureUrl: 'icons/monitor.jpg',name: 'Monitor',price: '\$300'),
+                  ItemCard(pictureUrl: 'icons/product_monitor.jpg',name: 'Monitor',price: '\$300'),
 
                   SizedBox(height: 5,),
 
-                  ItemCard(pictureUrl: 'icons/laptop.jpg',name: 'Laptop',price: '\$700'),
+                  ItemCard(pictureUrl: 'icons/product_laptop.jpg',name: 'Laptop',price: '\$700'),
 
                   SizedBox(height: 5,),
 
-                  ItemCard(pictureUrl: 'icons/phone.jpg',name: 'Phone',price: '\$200'),
+                  ItemCard(pictureUrl: 'icons/product_phone.jpg',name: 'Phone',price: '\$200'),
 
                   SizedBox(height: 5,),
 
 
-                  ItemCard(pictureUrl: 'icons/popsocket.jpg',name: 'Pop Socket',price: '\$10'),
+                  ItemCard(pictureUrl: 'icons/product_popsocket.jpg',name: 'Pop Socket',price: '\$10'),
                 ],
               ),
 
 
               //checkout section
-              Row(
-                children: <Widget>[
-
-
-                  Column(
+               Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
@@ -95,23 +95,24 @@ class _CartState extends State<Cart>{
                     ],
                   ),
 
+              SizedBox(height: 5,),
+
+             ElevatedButton(
+               style: ElevatedButton.styleFrom(
+                 primary: Color(0xFF6BB389),
+                 elevation: 0,
+                 shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(12),
+                 )
+               ),
+               onPressed: (){},
+               child: Text('Check Out'),
+             ),
+
                 ],
               ),
 
-              TextButton(
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  backgroundColor: Color(0xFF6BB389),
-                ),
-                onPressed: (){},
-                child: Text('Checkout'),
-              ),
 
-
-
-
-            ]
-        ),
       ),
 
      // bottomNavigationBar: BuyerNav(),

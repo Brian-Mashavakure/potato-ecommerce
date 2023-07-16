@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../sellerview/sellerhome.dart';
 import '../sellerview/catalogue.dart';
 import '../sellerview/sellerprofile.dart';
-import '../sellerview/sellersettings.dart';
+import '../sellerview/settings/sellersettings.dart';
 
 class SellerNav extends StatefulWidget{
   const SellerNav({Key ? key}): super(key : key);
@@ -62,7 +63,7 @@ class _SellerNavState extends State<SellerNav>{
             icon: Icon(Icons.home),
           ),
           CustomNavigationBarItem(
-            icon: Icon(Icons.view_list),
+            icon: Icon(Icons.apps_rounded),
           ),
           CustomNavigationBarItem(
             icon:Icon(Icons.settings),

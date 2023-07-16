@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 
-import '../buyerview/buyerhome.dart';
+import '../buyerview/home/buyerhome.dart';
 import '../buyerview/buyerprofile.dart';
 import '../buyerview/cart/cart.dart';
 import '../buyerview/settings/buyersettings.dart';

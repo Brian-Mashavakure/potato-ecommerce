@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ionicons/ionicons.dart';
 
 
-import 'components/settingstile.dart';
-import '../cart/cart.dart';
-import '../../widgets/buyerdrawer.dart';
+import 'components/settingsTile.dart';
+import '../../widgets/sellerdrawer.dart';
 
 
-class BuyerSettings extends StatefulWidget{
-  const BuyerSettings({Key ? key}): super(key : key);
+class SellerSettings extends StatefulWidget{
+  const SellerSettings({Key ? key}): super(key : key);
 
-  State<BuyerSettings> createState() => _BuyerSettingsState();
+  State<SellerSettings> createState() => _SellerSettingsState();
 }
 
-class _BuyerSettingsState extends State<BuyerSettings>{
+class _SellerSettingsState extends State<SellerSettings>{
 
   @override
   Widget build(BuildContext context){
@@ -35,15 +33,12 @@ class _BuyerSettingsState extends State<BuyerSettings>{
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Cart()));
-            },
+            icon: Icon(Icons.person),
+            onPressed: (){},
           )
         ],
 
       ),
-      drawer: BuyerDrawer(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -86,7 +81,7 @@ class _BuyerSettingsState extends State<BuyerSettings>{
                 color: Colors.black87,
                 icon: Ionicons.finger_print,
                 title: "Set Up Biometrics",
-                onTap: () {}
+                onTap: () {},
               ),
               const SizedBox(
                 height: 40,
@@ -100,7 +95,10 @@ class _BuyerSettingsState extends State<BuyerSettings>{
             ],
           ),
         ),
-        ),
+      ),
     );
   }
 }
+
+
+

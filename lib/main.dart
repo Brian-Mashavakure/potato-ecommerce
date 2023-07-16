@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
   final authUtilsObj = new AuthUtils();
 
   //firebase user
-  final _user = FirebaseAuth.instance.currentUser!;
+  final _user = FirebaseAuth.instance.currentUser;
 
 
   // This widget is the root of the application.
@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot){
             if(snapshot.hasData){
-              return _user!.displayName.toString() == 'Buyer'? BuyerNav() : _user!.displayName.toString() == 'Seller' ? SellerNav() : CircularProgressIndicator();
+              return HomePage();//_user!.displayName.toString() == 'Buyer'? BuyerNav() : _user!.displayName.toString() == 'Seller' ? SellerNav() : CircularProgressIndicator();
             }else{
               return WelcomePage();
             }

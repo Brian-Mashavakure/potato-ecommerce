@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/sellernav.dart';
+import '../widgets/sellerdrawer.dart';
 
 
 class Catalogue extends StatefulWidget{
@@ -33,12 +34,13 @@ class _CatalogueState extends State<Catalogue>{
         ),
         actions: [
           IconButton(
-            icon: FaIcon(FontAwesomeIcons.person),
+            icon: Icon(Icons.person),
             onPressed: (){},
           )
         ],
 
       ),
+      drawer: SellerDrawer(),
       body: SafeArea(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
