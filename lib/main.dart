@@ -3,17 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
-import 'pages/homepage.dart';
 import 'pages/welcomepage.dart';
 import 'pages/authentication/authutils.dart';
-import 'pages/widgets/buyernav.dart';
-import 'pages/widgets/sellernav.dart';
-import 'services/mongoconnection.dart';
+import 'pages/widgets/navbar.dart';
+
+
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await MongoConnection.connect();
 
 
 
@@ -91,7 +89,7 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot){
             if(snapshot.hasData){
-              return HomePage();//_user!.displayName.toString() == 'Buyer'? BuyerNav() : _user!.displayName.toString() == 'Seller' ? SellerNav() : CircularProgressIndicator();
+              return NavBar();
             }else{
               return WelcomePage();
             }

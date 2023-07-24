@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../cart/cart.dart';
-import '../../widgets/buyerdrawer.dart';
+import '../widgets/drawerclass.dart';
 import 'components/accessories.dart';
 import 'components/consoles.dart';
 import 'components/desks.dart';
@@ -11,14 +11,14 @@ import 'components/monitors.dart';
 import 'components/phones.dart';
 import 'components/categorycontainer.dart';
 
-class UserHome extends StatefulWidget{
-  const UserHome({Key ? key}): super(key : key);
+class HomePage extends StatefulWidget{
+  const HomePage({Key ? key}): super(key : key);
 
   @override
-  State<UserHome> createState() => _UserHomeState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _UserHomeState extends State<UserHome>{
+class _HomePageState extends State<HomePage>{
   //firebase auth instance
   final auth = FirebaseAuth.instance;
 
@@ -54,7 +54,7 @@ class _UserHomeState extends State<UserHome>{
         ],
 
       ),
-      drawer: BuyerDrawer(),
+      drawer: DrawerClass(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(4.0),

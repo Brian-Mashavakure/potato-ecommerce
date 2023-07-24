@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:ionicons/ionicons.dart';
 
-import '../sellerview/sellerhome.dart';
-import '../sellerview/catalogue.dart';
-import '../sellerview/sellerprofile.dart';
-import '../sellerview/settings/sellersettings.dart';
 
-class SellerNav extends StatefulWidget{
-  const SellerNav({Key ? key}): super(key : key);
+import '../home/homepage.dart';
+import '../profile.dart';
+import '../cart/cart.dart';
+import '../settings/settings.dart';
 
-  State<SellerNav> createState() => _SellerNavState();
+
+class NavBar extends StatefulWidget{
+  const NavBar({Key ? key}): super(key : key);
+
+  State<NavBar> createState() => _NavBarState();
 }
 
-class _SellerNavState extends State<SellerNav>{
+class _NavBarState extends State<NavBar>{
 
   PageController _pageController = PageController();
 
   int _selectedIndex = 0;
   List<Widget> _screen = [
-    SellerHome(),
-    Catalogue(),
-    SellerSettings(),
-    SellerProfile(),
+    HomePage(),
+    Cart(),
+    Settings(),
+    Profile(),
   ];
 
   void _onPageChanged(int index) {
@@ -63,10 +64,10 @@ class _SellerNavState extends State<SellerNav>{
             icon: Icon(Icons.home),
           ),
           CustomNavigationBarItem(
-            icon: Icon(Icons.apps_rounded),
+            icon: Icon(Icons.shopping_cart),
           ),
           CustomNavigationBarItem(
-            icon:Icon(Icons.settings),
+            icon: Icon(Icons.settings),
           ),
           CustomNavigationBarItem(
             icon: Icon(Icons.person),

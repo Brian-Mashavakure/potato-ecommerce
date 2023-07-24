@@ -3,8 +3,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
-import '../homepage.dart';
+import '../home/homepage.dart';
 
 class OTP extends StatefulWidget{
   const OTP({Key ? key}): super(key : key);

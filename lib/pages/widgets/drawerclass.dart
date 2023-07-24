@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
 
-import '../buyerview/buyerprofile.dart';
-import '../buyerview/buyerwishlist.dart';
-import '../buyerview/promotions.dart';
+import '../profile.dart';
+import '../wishlist.dart';
+import '../promotions.dart';
 import 'support.dart';
 
 
-class BuyerDrawer extends StatefulWidget{
-  const BuyerDrawer({Key ? key}): super(key : key);
+class DrawerClass extends StatefulWidget{
+  const DrawerClass({Key ? key}): super(key : key);
 
-  State<BuyerDrawer> createState() => _BuyerDrawerState();
+  State<DrawerClass> createState() => _DrawerClassState();
 }
 
 
-class _BuyerDrawerState extends State<BuyerDrawer>{
+class _DrawerClassState extends State<DrawerClass>{
 
 
   //screens list
@@ -39,9 +39,9 @@ class _BuyerDrawerState extends State<BuyerDrawer>{
         baseStyle: mytextstyle,
          selectedStyle: TextStyle(),
          colorLineSelected: Color(0xFF2E111E),
-         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyerProfile()))
+         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile()))
      ),
-         BuyerProfile(),
+         Profile(),
      ),
 
      //wishlist

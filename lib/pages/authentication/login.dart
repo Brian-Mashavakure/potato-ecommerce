@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'signup.dart';
 import 'otp.dart';
-import 'authutils.dart';
 import 'forgotpasword.dart';
 
 class Login extends StatefulWidget{

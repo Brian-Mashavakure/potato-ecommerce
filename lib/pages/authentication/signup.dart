@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'login.dart';
 import 'otp.dart';
 import 'authutils.dart';
-import '../homepage.dart';
+import '../home/homepage.dart';
 
 class Signup extends StatefulWidget{
   const Signup({Key ? key}): super(key : key);
@@ -51,40 +51,32 @@ class _SignupState extends State<Signup>{
   }
 
   //signup user
-  //using firebase display name property for user role
-  Future<void> SignUp(String role, String email, String password) async{
-    try{
+  Future<void> SignUp( String email, String password) async{
+    try {
       if(confirmPassword()){
-        //create user
+        //creating user with custom UID
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: email, password: password);
-        await FirebaseAuth.instance.currentUser!.updateDisplayName(role);
-
-        //creating user document in firebase
-        await FirebaseFirestore.instance.collection('users').doc(role).set({
-          'email': email,
-          'uid': role,
-          'password': password,
-        });
+            email: email,
+            password: password
+        );
 
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
 
-
       }
     }on FirebaseAuthException catch (e){
-      Fluttertoast.showToast(
-          msg: e.message.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.deepPurpleAccent,
-          textColor: Colors.white,
-          fontSize: 16.0
-      );
-
-
+      //Utils.showSnackBar(e.message);
+      print(e.toString());
     }
+
+    //hide progress indicator after login
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
+
+
+
+
+
+
 
 
   Future AddUserRole() async{
@@ -257,7 +249,6 @@ class _SignupState extends State<Signup>{
 
                   ElevatedButton(
                     onPressed: () => SignUp(
-                      userRole!,
                       emailController.text,
                       passwordController.text
                     ),
@@ -265,7 +256,7 @@ class _SignupState extends State<Signup>{
                     style: ElevatedButton.styleFrom(
                       textStyle: TextStyle(
                         //color: Color(0xFF6BB389),
-                      )
+                      ),
                     ),
                   ),
 

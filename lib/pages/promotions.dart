@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/sellerdrawer.dart';
+import 'widgets/drawerclass.dart';
 
-class Reviews extends StatelessWidget{
+class Promotions extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text('Potato Ecommerce'),
@@ -28,8 +28,7 @@ class Reviews extends StatelessWidget{
         ],
 
       ),
-      drawer: SellerDrawer(),
+      drawer: DrawerClass(),
     );
   }
-
 }

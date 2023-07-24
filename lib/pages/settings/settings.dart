@@ -5,16 +5,16 @@ import 'package:ionicons/ionicons.dart';
 
 import 'components/settingstile.dart';
 import '../cart/cart.dart';
-import '../../widgets/buyerdrawer.dart';
+import '../widgets/drawerclass.dart';
 
 
-class BuyerSettings extends StatefulWidget{
-  const BuyerSettings({Key ? key}): super(key : key);
+class Settings extends StatefulWidget{
+  const Settings({Key ? key}): super(key : key);
 
-  State<BuyerSettings> createState() => _BuyerSettingsState();
+  State<Settings> createState() => _SettingsState();
 }
 
-class _BuyerSettingsState extends State<BuyerSettings>{
+class _SettingsState extends State<Settings>{
 
   @override
   Widget build(BuildContext context){
@@ -43,7 +43,7 @@ class _BuyerSettingsState extends State<BuyerSettings>{
         ],
 
       ),
-      drawer: BuyerDrawer(),
+      drawer: DrawerClass(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/buyerdrawer.dart';
+import 'widgets/drawerclass.dart';
 
 class WishList extends StatelessWidget{
   @override
@@ -28,7 +28,7 @@ class WishList extends StatelessWidget{
         ],
 
       ),
-      drawer: BuyerDrawer(),
+      drawer: DrawerClass(),
     );
   }
 }

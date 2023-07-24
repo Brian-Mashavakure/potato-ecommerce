@@ -10,7 +10,7 @@ class _LaptopsState extends State<Laptops>{
   @override
   Widget build(BuildContext context){
     return Center(
-      child: Text('Consoles'),
+      child: Text('Laptops'),
     );
   }
 }

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-import '../widgets/buyernav.dart';
-import '../widgets/buyerdrawer.dart';
+import 'widgets/navbar.dart';
+import 'widgets/drawerclass.dart';
 
 
-class BuyerProfile extends StatefulWidget{
-  const BuyerProfile({Key ? key}): super(key : key);
+class Profile extends StatefulWidget{
+  const Profile({Key ? key}): super(key : key);
 
   @override
-  State<BuyerProfile> createState() => _BuyerProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _BuyerProfileState extends State<BuyerProfile>{
+class _ProfileState extends State<Profile>{
 
 
   @override
@@ -41,7 +41,7 @@ class _BuyerProfileState extends State<BuyerProfile>{
         ],
 
       ),
-      drawer: BuyerDrawer(),
+      drawer: DrawerClass(),
       body: SafeArea(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
