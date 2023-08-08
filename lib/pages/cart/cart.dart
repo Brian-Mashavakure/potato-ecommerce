@@ -93,7 +93,7 @@ class _CartState extends State<Cart>{
                         pictureUrl: 'icons/product_phone.jpg',
                         name: 'Phone',
                         color: 'Purple',
-                        price: '\$200',
+                        price: '200',
                       ),
 
                       SizedBox(height: 10,),
@@ -102,7 +102,7 @@ class _CartState extends State<Cart>{
                         pictureUrl: 'icons/product_laptop.jpg',
                         name: 'Laptop',
                         color: 'Teal',
-                        price: '\$1000',
+                        price: '1000',
                       ),
 
                       SizedBox(height: 10,),
@@ -111,7 +111,7 @@ class _CartState extends State<Cart>{
                         pictureUrl: 'icons/product_monitor.jpg',
                         name: 'Monitor',
                         color: 'White',
-                        price: '\$300',
+                        price: '300',
                       ),
 
 
@@ -127,7 +127,7 @@ class _CartState extends State<Cart>{
                  style: ElevatedButton.styleFrom(
                    primary: Color(0xFF573F45),
                    elevation: 0,
-                   minimumSize: Size(300, 60),
+                   minimumSize: Size(500, 50),
                    shape: RoundedRectangleBorder(
                      borderRadius: BorderRadius.circular(18),
                    )

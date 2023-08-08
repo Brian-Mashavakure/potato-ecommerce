@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../cart/cart.dart';
 import '../widgets/drawerclass.dart';
-import 'components/accessories.dart';
-import 'components/consoles.dart';
-import 'components/desks.dart';
-import 'components/laptops.dart';
-import 'components/monitors.dart';
-import 'components/phones.dart';
-import 'components/categorycontainer.dart';
+import 'tabs/accessories.dart';
+import 'tabs/consoles.dart';
+import 'tabs/desks.dart';
+import 'tabs/laptops.dart';
+import 'tabs/monitors.dart';
+import 'tabs/phones.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key ? key}): super(key : key);
@@ -18,11 +17,19 @@ class HomePage extends StatefulWidget{
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   //firebase auth instance
   final auth = FirebaseAuth.instance;
 
   String screenVariable = '';
+
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 6, vsync: this);
+  }
 
 
 
@@ -52,150 +59,57 @@ class _HomePageState extends State<HomePage>{
             },
           )
         ],
+        bottom: TabBar(
+          controller: tabController,
+         padding: EdgeInsets.all(12),
+         physics: AlwaysScrollableScrollPhysics(),
+         indicatorSize: TabBarIndicatorSize.tab,
+         isScrollable: true,
+         tabs: [
+           Tab(
+             text: 'Accessories',
+           ),
+
+           Tab(
+             text: 'Consoles',
+           ),
+
+           Tab(
+             text: 'Desks',
+           ),
+
+           Tab(
+             text: 'Laptops',
+           ),
+
+           Tab(
+             text: 'Monitors',
+           ),
+
+           Tab(
+             text: 'Phones',
+           ),
+         ],
+        ),
 
       ),
       drawer: DrawerClass(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //categories top part
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 110,
-                        child: ListView(
-                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                          physics: ClampingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
+      body: TabBarView(
+        controller: tabController,
+        children: [
+          Accessories(),
 
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'laptops';
-                                });
-                              },
-                              icon: Icon(Icons.laptop_chromebook_outlined, size: 35, color: Colors.white70,),
-                              category: 'Laptops',
-                            ),
+          Consoles(),
 
-                            SizedBox(width: 10,),
+          Desks(),
 
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'phones';
-                                });
-                              },
-                              icon: Icon(Icons.phone_android_outlined, size: 35,color: Colors.white70,),
-                              category: 'Phones',
-                            ),
+          Laptops(),
 
-                            SizedBox(width: 10,),
+          Monitors(),
 
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'monitors';
-                                });
-                              },
-                              icon: Icon(Icons.monitor_outlined, size: 35,color: Colors.white70,),
-                              category: 'Monitors',
-                            ),
-
-                            SizedBox(width: 10,),
-
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'accessories';
-                                });
-                              },
-                              icon: Icon(Icons.watch_outlined, size: 35, color: Colors.white70,),
-                              category: 'Accessories',
-                            ),
-
-                            SizedBox(width: 10,),
-
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'desks';
-                                });
-                              },
-                              icon: Icon(Icons.desk_outlined, size: 35, color: Colors.white70,),
-                              category: 'Desks',
-                            ),
-
-                            SizedBox(width: 10,),
-
-                            CategoryContainer(
-                              function: (){
-                                setState(() {
-                                  screenVariable = 'consoles';
-                                });
-                              },
-                              icon: Icon(Icons.videogame_asset_outlined, size: 35, color: Colors.white70,),
-                              category: 'Consoles',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 10,),
-
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    children: <Widget>[
-
-                      (screenVariable == 'laptops')?
-                      Laptops():
-
-                      (screenVariable == 'phones')?
-                      Phones():
-
-                      (screenVariable == 'monitors')?
-                      Monitors():
-
-                      (screenVariable == 'accessories')?
-                      Accessories():
-
-                      (screenVariable == 'desks')?
-                      Desks():
-
-                      (screenVariable == 'consoles')?
-                      Consoles():
-
-                      Column(
-                        children: <Widget>[
-                          Center(
-                            child: Text('No Categories'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-
-
-
-              ]
-          ),
-        ),
+          Phones(),
+        ],
       ),
-
-      //bottomNavigationBar: BuyerNav(),
     );
   }
 }

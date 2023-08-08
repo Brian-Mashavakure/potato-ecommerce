@@ -73,19 +73,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
         textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black54)),
       ),
-      home: AnimatedSplashScreen(
-        splash: Scaffold(
-          body: Center(
-            child:  Container(
-              alignment: Alignment.center,
-              height: 200,
-              width: 200,
-              child: Image.asset('icons/logo.jpg'),
-            ),
-          ),
-        ),
-        duration: 2000,
-        nextScreen:  StreamBuilder<User?>(
+      home:StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot){
             if(snapshot.hasData){
@@ -95,9 +83,7 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        splashTransition: SplashTransition.fadeTransition,
-        backgroundColor: Colors.white,
-      ),
+
 
 
     );
