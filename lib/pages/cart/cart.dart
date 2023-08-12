@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'components/itemcard.dart';
 import '../widgets/drawerclass.dart';
+import 'components/cartModel.dart';
 import 'components/productmodel.dart';
 
 
@@ -14,19 +16,7 @@ class Cart extends StatefulWidget{
 
 class _CartState extends State<Cart>{
 
-  //cart items list
-  List<Product> cartItems = [
-    Product(name: 'Phone', color: 'Purple',price: '200',pictureUrl: 'icons/product_phone.jpg',),
-    Product(name: 'Laptop', color: 'Teal',price: '1000',pictureUrl: 'icons/product_laptop.jpg',),
-    Product(name: 'Monitor', color: 'White',price: '300',pictureUrl: 'icons/product_monitor.jpg',),
-  ];
 
-  // Function to remove an item from the cart
-  removeFromCart(String name) {
-    setState(() {
-      cartItems.removeWhere((product) => product.name == name);
-    });
-  }
 
 
   @override
@@ -66,84 +56,94 @@ class _CartState extends State<Cart>{
               children: [
                //listview section
                 SizedBox(
-                  height: 600,
-                  child:
-                  // ListView.builder(
-                  //   itemCount: cartItems.length,
-                  //     itemBuilder: (context, index){
-                  //     Product product = cartItems[index];
-                  //     return ItemCard(
-                  //       color: product.color,
-                  //       name: product.name,
-                  //       pictureUrl: product.pictureUrl,
-                  //       price: product.price,
-                  //       removeFunction: removeFromCart(product.name!),
-                  //     );
-                  //
-                  //     },
-                  //
-                  // ),
+                  height: 580,
+                  child:Consumer<CartModel>(
+                    builder: (context, value, child){
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(8.0),
+                        itemCount: value.cartItems.length,
+                        itemBuilder: (context, index){
+                          Product cart = value.cartItems[index];
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ItemCard(
+                                pictureUrl: cart.pictureUrl,//value.cartItems[0],
+                                name: cart.name,//value.cartItems[1],
+                                price: cart.price,//value.cartItems[2],
+                                color: cart.color, //value.cartItems[2],
+                                removeFunction: () => Provider.of<CartModel>(context, listen: false).removeItemFromCart(index),
+                              ),
 
-                  ListView(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    children: <Widget>[
+                              SizedBox(height: 10,),
+                            ],
+                          );
+                        },
 
-                      ItemCard(
-                        pictureUrl: 'icons/product_phone.jpg',
-                        name: 'Phone',
-                        color: 'Purple',
-                        price: '200',
-                      ),
+                      );
+                    },
 
-                      SizedBox(height: 10,),
-
-                      ItemCard(
-                        pictureUrl: 'icons/product_laptop.jpg',
-                        name: 'Laptop',
-                        color: 'Teal',
-                        price: '1000',
-                      ),
-
-                      SizedBox(height: 10,),
-
-                      ItemCard(
-                        pictureUrl: 'icons/product_monitor.jpg',
-                        name: 'Monitor',
-                        color: 'White',
-                        price: '300',
-                      ),
-
-
-                    ],
-                  ),
+                  )
                 ),
 
 
 
                 SizedBox(height: 15,),
 
-               ElevatedButton(
-                 style: ElevatedButton.styleFrom(
-                   primary: Color(0xFF573F45),
-                   elevation: 0,
-                   minimumSize: Size(500, 50),
-                   shape: RoundedRectangleBorder(
-                     borderRadius: BorderRadius.circular(18),
-                   )
-                 ),
-                 onPressed: (){},
-                 child: Text('Check Out'),
-               ),
+              Consumer<CartModel>(
+                builder: (context, value, child){
+                  return  Container(
+                    width: 500,
+                    height: 80,
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: Color(0xFF573F45),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Total Price', style: TextStyle(color: Colors.white,),),
+                            Text(value.calculateTotal(), style: TextStyle(color: Colors.white,),),
+                          ],
+                        ),
+
+
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: Colors.white,
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Center(
+                              child: TextButton(onPressed: (){}, child: Text('Check Out', style: TextStyle(color: Colors.white,),),
+                              ),
+                            ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+
 
                   ],
                 ),
         ),
-
-
       ),
 
-     // bottomNavigationBar: BuyerNav(),
     );
   }
 }

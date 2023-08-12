@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import '../cart/components/cartModel.dart';
+import 'package:provider/provider.dart';
 
 
 import '../home/homepage.dart';
@@ -40,8 +42,41 @@ class _NavBarState extends State<NavBar>{
   @override
   void dispose() {
     _pageController.dispose();
+    _cartItemCount =  Provider.of<CartModel>(context).cartItems.length;
     super.dispose();
   }
+
+  int _cartItemCount = 0;
+
+  //cart icon
+  Widget buildCartIcon() => Stack(
+    children: [
+      Icon(Icons.shopping_cart),
+      if (_cartItemCount > 0)
+        Positioned(
+          right: 0,
+          child: Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: Colors.red,
+              shape: BoxShape.circle,
+            ),
+            constraints: BoxConstraints(
+              minWidth: 16,
+              minHeight: 16,
+            ),
+            child: Text(
+              _cartItemCount.toString(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context){
@@ -64,7 +99,7 @@ class _NavBarState extends State<NavBar>{
             icon: Icon(Icons.home),
           ),
           CustomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon:  buildCartIcon(),//Icon(Icons.shopping_cart),
           ),
           CustomNavigationBarItem(
             icon: Icon(Icons.settings),

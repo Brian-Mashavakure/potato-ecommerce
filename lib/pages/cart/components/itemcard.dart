@@ -54,6 +54,7 @@ class _ItemCardState extends State<ItemCard>{
           color: Colors.white70,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             //picture
             Image.asset(widget.pictureUrl!, height: 65, width: 65,),
@@ -65,19 +66,19 @@ class _ItemCardState extends State<ItemCard>{
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.name!, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                Text(widget.name!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
 
                 SizedBox(height: 3,),
 
-                Text(widget.color!, style: TextStyle(fontSize: 13,),),
+                Text(widget.color!, style: TextStyle(fontSize: 10,),),
 
                 SizedBox(height: 3,),
 
-                Text('\$${widget.price!}',style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),)
+                Text('\$${widget.price!}',style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),)
               ],
             ),
 
-            SizedBox(width: 15,),
+
 
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -103,7 +104,7 @@ class _ItemCardState extends State<ItemCard>{
               ),
             ),
 
-            SizedBox(width: 18,),
+
 
             GestureDetector(
               onTap: widget.removeFunction,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../cart/components/cartModel.dart';
+import '../../cart/components/productmodel.dart';
 
 import '../components/productCard.dart';
 import '../components/expandProductCard.dart';
@@ -11,84 +14,42 @@ class Accessories extends StatefulWidget{
 
 class _AccessoriesState extends State<Accessories>{
 
-  List<AccessoriesList> accessories = [
-    AccessoriesList(
-      imageUrl: 'icons/smartwatch.jpg',
-       accName: 'Smart Watch',
-       accColor: 'Black',
-      accPrice: '300',
-    ),
-
-    AccessoriesList(
-      imageUrl: 'icons/headphones.jpg',
-      accName: 'Headphones',
-      accColor: 'Yellow',
-      accPrice: '20',
-    ),
-
-    AccessoriesList(
-      imageUrl: 'icons/mouse.jpg',
-       accName: 'Mouse',
-       accColor: 'Black',
-      accPrice: '5',
-    ),
-
-    AccessoriesList(
-      imageUrl: 'icons/fitband.jpg',
-       accName: 'Fit Band',
-       accColor: 'Black',
-      accPrice: '200',
-    ),
-
-    AccessoriesList(
-      imageUrl: 'icons/product_popsocket.jpg',
-       accName: 'Socket',
-       accColor: 'white',
-      accPrice: '300',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context){
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.all(8.0),
-      itemCount: accessories.length,
-      itemBuilder: (context, index){
-        AccessoriesList accessory = accessories[index];
-        return Column(
-          children: [
-            ProductCard(
-              imageUrl: accessory.imageUrl,
-              color: accessory.accColor,
-              price: accessory.accPrice,
-              name: accessory.accName,
-              expandFunction: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandCard(
-                color: accessory.accColor, name: accessory.accName, price: accessory.accPrice, imageUrl: accessory.imageUrl,
-              ))),
-            ),
+    return Consumer<CartModel>(
+      builder: (context, value, child){
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(8.0),
+          itemCount: value.accessoryItems.length,
+          itemBuilder: (context, index){
+            Product product = value.accessoryItems[index];
+            return Column(
+              children: [
+                ProductCard(
+                  imageUrl:product.pictureUrl,
+                  name: product.name,
+                  price: product.price,
+                  color: product.color,
+                  expandFunction: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandCard(
+                    color: product.color,//value.accessoryItems[index][3],
+                    name:  product.name,//value.accessoryItems[index][1],
+                    price: product.price, //value.accessoryItems[index][2],
+                    imageUrl: product.pictureUrl,//value.accessoryItems[index][0],
+                    addToCart: () => Provider.of<CartModel>(context, listen: false).addAccessoryItemToCart(index),
+                  ))),
+                ),
 
-            SizedBox(height: 10,),
-          ],
+                SizedBox(height: 10,),
+              ],
+            );
+
+          },
         );
-
       },
     );
   }
 }
 
 
-class AccessoriesList {
-  final String? imageUrl;
-  final String? accName;
-  final String? accColor;
-  final String? accPrice;
-
-  AccessoriesList({
-    this.imageUrl,
-    this.accName,
-    this.accColor,
-    this.accPrice,
-});
-}

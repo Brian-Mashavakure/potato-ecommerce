@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
 import '../cart/cart.dart';
 import '../widgets/drawerclass.dart';

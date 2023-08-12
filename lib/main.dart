@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:provider/provider.dart';
+import 'pages/cart/components/cartModel.dart';
 
 import 'pages/welcomepage.dart';
 import 'pages/authentication/authutils.dart';
@@ -23,23 +25,6 @@ class MyApp extends StatelessWidget {
 
   MyApp({super.key,});
 
-  //swatch color
-  // final Color myColor = Color(0xFF972D07);
-  // final MaterialColor swatchColor = MaterialColor(
-  //   0xFF972D07,
-  //   <int, Color>{
-  //     50: Color(0xFFFFE6E0),
-  //     100: Color(0xFFFFCDBA),
-  //     200: Color(0xFFFFAF8F),
-  //     300: Color(0xFFFF8F63),
-  //     400: Color(0xFFFF7136),
-  //     500: Color(0xFF972D07),
-  //     600: Color(0xFF6F2106),
-  //     700: Color(0xFF4C1704),
-  //     800: Color(0xFF2A0B02),
-  //     900: Color(0xFF0B0000),
-  //   },
-  // );
 
   final Color myColor = Color(0xFF321325);
   final MaterialColor swatchColor = MaterialColor(0xFF321325, {
@@ -65,15 +50,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      scaffoldMessengerKey: authUtilsObj.messengerKey,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-       primarySwatch: swatchColor,
-        scaffoldBackgroundColor: Color(0xFFF5F5F5),
-        textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black54)),
-      ),
-      home:StreamBuilder<User?>(
+    return ChangeNotifierProvider(
+        create: (context) => CartModel(),
+      child:  MaterialApp(
+        scaffoldMessengerKey: authUtilsObj.messengerKey,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: swatchColor,
+          scaffoldBackgroundColor: Color(0xFFF5F5F5),
+          textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black54)),
+        ),
+        home:StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot){
             if(snapshot.hasData){
@@ -83,9 +70,7 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-
-
-
+      ),
     );
   }
 }

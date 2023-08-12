@@ -6,12 +6,14 @@ class ExpandCard extends StatefulWidget{
   final String? name;
   final String? color;
   final String? price;
+  final addToCart;
 
   const ExpandCard({
     this.imageUrl,
     this.name,
     this.color,
     this.price,
+    this.addToCart,
     Key ? key,
   }): super(key : key);
 
@@ -19,7 +21,7 @@ class ExpandCard extends StatefulWidget{
 }
 
 class _ExpandCardState extends State<ExpandCard>{
-  //wishlist icon clor change items
+  //wishlist icon color change items
   bool isIconSelected = false;
 
   void changeIconColor() {
@@ -202,7 +204,7 @@ class _ExpandCardState extends State<ExpandCard>{
                               borderRadius: BorderRadius.circular(18),
                             )
                         ),
-                        onPressed: (){},
+                        onPressed: widget.addToCart,
                         child: Text('Add To Cart'),
                       ),
 

@@ -3,13 +3,14 @@ class Product{
   final String? name;
   final String? color;
   final String? price;
-  final removeFunction;
+  final int? quantity;
+  
 
   Product({
     this.pictureUrl,
     this.name,
     this.color,
     this.price,
-    this.removeFunction,
+    this.quantity = 1,
 });
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../cart/components/cartModel.dart';
+import '../../cart/components/productmodel.dart';
 
 import '../components/expandProductCard.dart';
 import '../components/productCard.dart';
@@ -11,81 +14,41 @@ class Consoles extends StatefulWidget{
 }
 
 class _ConsolesState extends State<Consoles>{
-  List<ConsolesList> consoles = [
-    ConsolesList(
-      imageUrl: 'icons/xbox1.jpg',
-      consoleColor: 'White',
-      consoleName: 'Xbox One',
-      consolePrice: '300',
-    ),
-
-    ConsolesList(
-      imageUrl: 'icons/switch.jpg',
-      consoleColor: 'Red and Blue',
-      consoleName: 'Nintendo',
-      consolePrice: '150',
-    ),
-
-    ConsolesList(
-      imageUrl: 'icons/ps4.jpg',
-      consoleColor: 'Black',
-      consoleName: 'PS4',
-      consolePrice: '250',
-    ),
-
-    ConsolesList(
-      imageUrl: 'icons/xbox360.jpg',
-      consoleColor: 'Black',
-      consoleName: 'Xbox 360',
-      consolePrice: '250',
-    ),
-
-  ];
-
-
   @override
   Widget build(BuildContext context){
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.all(8.0),
-      itemCount: consoles.length,
-      itemBuilder: (context, index){
-        ConsolesList console = consoles[index];
-        return Column(
-          children: [
-            ProductCard(
-              imageUrl: console.imageUrl,
-              color: console.consoleColor,
-              price: console.consolePrice,
-              name: console.consoleName,
-              expandFunction: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandCard(
-                imageUrl: console.imageUrl,
-                color: console.consoleColor,
-                price: console.consolePrice,
-                name: console.consoleName,
-              ))),
-            ),
+    return  Consumer<CartModel>(
+      builder: (context, value, child){
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(8.0),
+          itemCount: value.consoleItems.length,
+          itemBuilder: (context, index){
+            Product product = value.consoleItems[index];
+            return Column(
+              children: [
+                ProductCard(
+                  imageUrl:product.pictureUrl,
+                  name: product.name,
+                  price: product.price,
+                  color: product.color,
+                  expandFunction: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandCard(
+                    color: product.color,
+                    name:  product.name,
+                    price: product.price,
+                    imageUrl: product.pictureUrl,
+                    addToCart: () => Provider.of<CartModel>(context, listen: false).addConsoleItemToCart(index),
+                  ))),
+                ),
 
-            SizedBox(height: 10,),
-          ],
+                SizedBox(height: 10,),
+              ],
+            );
+
+          },
         );
-
       },
     );
   }
 }
 
-class ConsolesList {
-  final String? imageUrl;
-  final String? consoleName;
-  final String? consoleColor;
-  final String? consolePrice;
-
-  ConsolesList({
-    this.imageUrl,
-    this.consoleName,
-    this.consoleColor,
-    this.consolePrice,
-  });
-}
