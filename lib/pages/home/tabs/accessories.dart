@@ -33,11 +33,12 @@ class _AccessoriesState extends State<Accessories>{
                   price: product.price,
                   color: product.color,
                   expandFunction: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExpandCard(
-                    color: product.color,//value.accessoryItems[index][3],
-                    name:  product.name,//value.accessoryItems[index][1],
-                    price: product.price, //value.accessoryItems[index][2],
-                    imageUrl: product.pictureUrl,//value.accessoryItems[index][0],
+                    color: product.color,
+                    name:  product.name,
+                    price: product.price,
+                    imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addAccessoryItemToCart(index),
+                    addToWishList: Provider.of<CartModel>(context, listen: false).addAccessoryItemToWishlist(index),
                   ))),
                 ),
 

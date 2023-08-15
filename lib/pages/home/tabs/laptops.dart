@@ -38,6 +38,7 @@ class _LaptopsState extends State<Laptops>{
                     price: product.price,
                     imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addLaptopItemToCart(index),
+                    addToWishList: () => Provider.of<CartModel>(context, listen: false).addLaptopItemToWishlist(index),
                   ))),
                 ),
 

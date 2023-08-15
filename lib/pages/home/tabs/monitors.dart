@@ -39,6 +39,7 @@ class _MonitorsState extends State<Monitors>{
                     price: product.price,
                     imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addMonitorItemToCart(index),
+                    addToWishList: () => Provider.of<CartModel>(context, listen: false).addMonitorItemToWishlist(index),
                   ))),
                 ),
 

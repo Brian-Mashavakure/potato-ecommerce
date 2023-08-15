@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'pages/cart/components/cartModel.dart';
 

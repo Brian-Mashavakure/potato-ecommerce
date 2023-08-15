@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../profile.dart';
-import '../wishlist.dart';
+import '../profile/profile.dart';
+import '../wishlist/wishlist.dart';
 import '../promotions.dart';
 import 'support.dart';
 import '../home/homepage.dart';
@@ -126,10 +126,17 @@ class _DrawerClassState extends State<DrawerClass>{
             SizedBox(height: 20,),
 
 
-            IconButton(
-              onPressed: () => _auth.signOut(),
-              icon: Icon(Icons.logout),
-            ),
+           Row(
+             mainAxisSize: MainAxisSize.min,
+             mainAxisAlignment: MainAxisAlignment.start,
+             children: [
+               IconButton(
+                 onPressed: () => _auth.signOut(),
+                 icon: Icon(Icons.logout),
+               ),
+               Text('Log Out'),
+             ],
+           ),
           ],
         ),
       ),

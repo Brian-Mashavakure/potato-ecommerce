@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-import 'widgets/navbar.dart';
-import 'widgets/drawerclass.dart';
+import 'components/body.dart';
+import '../widgets/drawerclass.dart';
 
 
 class Profile extends StatefulWidget{
@@ -42,30 +42,7 @@ class _ProfileState extends State<Profile>{
 
       ),
       drawer: DrawerClass(),
-      body: SafeArea(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'Buyer Profile Page Bruh',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30
-                  ),
-
-                ),
-              ),
-
-
-
-
-            ]
-        ),
-      ),
-
-      //bottomNavigationBar: BuyerNav(),
+      body: Body(),
     );
   }
 }

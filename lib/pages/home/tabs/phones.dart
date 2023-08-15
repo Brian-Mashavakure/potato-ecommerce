@@ -37,6 +37,7 @@ class _PhonesState extends State<Phones>{
                     price: product.price,
                     imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addPhoneItemToCart(index),
+                    addToWishList: () => Provider.of<CartModel>(context, listen: false).addPhoneItemToWishlist(index),
                   ))),
                 ),
 

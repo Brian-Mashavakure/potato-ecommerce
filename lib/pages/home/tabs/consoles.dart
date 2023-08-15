@@ -38,6 +38,7 @@ class _ConsolesState extends State<Consoles>{
                     price: product.price,
                     imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addConsoleItemToCart(index),
+                    addToWishList:() => Provider.of<CartModel>(context, listen: false).addConsoleItemToWishlist(index),
                   ))),
                 ),
 

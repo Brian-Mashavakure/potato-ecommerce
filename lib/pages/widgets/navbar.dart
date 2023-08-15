@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 
 import '../home/homepage.dart';
-import '../profile.dart';
+import '../profile/profile.dart';
 import '../cart/cart.dart';
 import '../settings/settings.dart';
 

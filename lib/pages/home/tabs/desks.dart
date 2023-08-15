@@ -39,6 +39,7 @@ class _DesksState extends State<Desks>{
                     price: product.price,
                     imageUrl: product.pictureUrl,
                     addToCart: () => Provider.of<CartModel>(context, listen: false).addDeskItemToCart(index),
+                    addToWishList: () => Provider.of<CartModel>(context, listen: false).addDeskItemToWishlist(index),
                   ))),
                 ),
 

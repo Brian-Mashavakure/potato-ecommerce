@@ -7,6 +7,7 @@ class ExpandCard extends StatefulWidget{
   final String? color;
   final String? price;
   final addToCart;
+  final addToWishList;
 
   const ExpandCard({
     this.imageUrl,
@@ -14,6 +15,7 @@ class ExpandCard extends StatefulWidget{
     this.color,
     this.price,
     this.addToCart,
+    this.addToWishList,
     Key ? key,
   }): super(key : key);
 
@@ -106,8 +108,11 @@ class _ExpandCardState extends State<ExpandCard>{
 
                             IconButton(
                               icon: Icon(Icons.favorite, size: 35, color: isIconSelected ? Colors.red : Colors.grey,),
-                              onPressed: () => changeIconColor(),
-                            ),
+                              onPressed: () {
+                                changeIconColor();
+                                widget.addToWishList();
+                              }
+                                ),
                           ],
                         ),
                       ),
